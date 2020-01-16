@@ -1,0 +1,46 @@
+# install scripts
+init_wp
+wp-host-update*
+
+# editor
+/nbproject/private/
+/nbproject/
+.project
+npm-debug.log
+.idea
+.history
+
+# composer
+composer.lock
+/vendor/
+/cms/
+
+# svn
+.svn
+
+# Ignore Mac DS_Store files
+.DS_Store
+._*
+node_modules/
+.com.apple.timemachine.supported
+
+# linux backup files
+*~
+
+# markup
+.sass-cache
+node_modules
+/.temp/
+*.map
+*.tmp
+.tmp
+tmp
+*.psd
+*.ai
+*.zip
+*.tgz
+*.tar
+*.rar
+
+#npm dependencies
+package-lock.json

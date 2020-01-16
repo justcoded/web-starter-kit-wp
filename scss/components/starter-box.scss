@@ -1,0 +1,80 @@
+// Note: This is an example of components style, so please remove it or re-write it on your styles.
+
+.wrapper {
+  overflow: hidden;
+}
+
+.starter-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-white);
+
+  h1 {
+    @include animate(text-shadow);
+    font-size: 4.8rem;
+    @include media('hover') {
+      &:hover {
+        text-shadow: 0.1rem 0.5rem 0.5rem rgba(#fff, 0.5);
+      }
+    }
+  }
+  p {
+    font-size: 2rem;
+  }
+}
+
+.entry-section {
+  height: 100vh;
+}
+
+.entry-cells {
+  background: var(--base-background-color);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  .cell {
+    width: 10%;
+    height: 10%;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      height: 0.5rem;
+      width: 0.5rem;
+      border-radius: 50%;
+      background-color: var(--color-white);
+      animation-name: pulse;
+      animation-iteration-count: infinite;
+    }
+  }
+
+  @for $i from 0 through 100 {
+    .cell-#{$i}:after {
+      left: #{random(100)} + '%';
+      top: #{random(100)} + '%';
+      animation-duration: #{(random(100) + 100) / 100}s;
+      animation-delay: #{random(100) / 100}s;
+    }
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(#fff, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 0.8rem rgba(#fff, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(#fff, 0);
+  }
+}

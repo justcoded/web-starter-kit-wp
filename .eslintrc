@@ -1,0 +1,31 @@
+{
+  "globals": {
+    "jQuery": true,
+    "$": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "import"
+  ],
+  "extends": [
+    "airbnb-base"
+  ],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "func-names": [
+      "warn",
+      "as-needed"
+    ],
+    "quote-props": [
+      "warn",
+      "as-needed",
+      {
+        "keywords": true,
+        "unnecessary": false
+      }
+    ]
+  }
+}
