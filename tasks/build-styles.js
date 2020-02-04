@@ -18,19 +18,16 @@ module.exports = function (options) {
   const plugins = [
     autoprefixer(),
   ];
-  const errorConfig = {
-    title: 'Sass compiling error',
-    icon: './sys_icon/error_icon.png',
-    wait: true,
-  };
+  
+  options.error.title = 'Sass compiling error';
 
   options.isProduction ? plugins.push(gcmq({ sort: options.sortType, })) : false;
 
   return () => {
-    return gulp.src(`./scss/${options.mainScss}`)
+    return gulp.src(`./scss/styles.scss`)
       .pipe(gulpif(!options.isProduction, sourcemaps.init({ loadMaps: true, })))
       .pipe(sass.sync({ sourceMap: !options.isProduction, }))
-      .on('error', notify.onError(errorConfig))
+      .on('error', notify.onError(options.error))
       .pipe(postcss(plugins))
       .pipe(gulpif(!options.isProduction, sourcemaps.write('./')))
       .pipe(gulp.dest(`../${options.dest}/css`));

@@ -9,7 +9,7 @@ module.exports = function (options) {
 
   return async () => {
     const deletedPaths = await del([
-      `../${options.dir}/*.html`,
+      `../${options.dir}/**/*.html`,
       `../${options.dir}/css`,
       `../${options.dir}/js`,
     ], { force: true });
