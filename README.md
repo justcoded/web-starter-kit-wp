@@ -121,7 +121,7 @@ If you want to use our WSK, you need to know something about the structure.
   ├── css                         #Folder with compiled styles
   ├── js                          #Folder with compiled js
   ├── custom-folder               #Folder with your sources, witch are not compiling (like - images, fonts, videos, audios)
-  └── index.html                 #Compiled html file
+  └── index.html                  #Compiled html file
 
 ```
 
