@@ -12,17 +12,21 @@ module.exports = function (options) {
     prefix: '@@',
     basepath: `./${options.templates}`,
     indent: true,
+    context: {
+      mainJs: options.mainJs,
+      publicJs: options.publicJs,
+      vendorJs: options.vendorJs,
+      mainStyles: options.mainStyles,
+      vendorStyles: options.vendorStyles,
+    },
   };
-  const errorConfig = {
-    title: 'HTML compiling error',
-    icon: './sys_icon/error_icon.png',
-    wait: true,
-  };
+
+  options.error.title = 'HTML compiling error';
 
   return () => {
     return gulp.src(`./${options.templates}/**/*.html`)
       .pipe(fileInclude(config))
-      .on('error', notify.onError(errorConfig))
+      .on('error', notify.onError(options.error))
       .pipe(gulp.dest(`../${options.dest}`));
   };
 };
