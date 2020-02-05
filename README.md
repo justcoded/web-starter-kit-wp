@@ -16,10 +16,11 @@ Web Starter Kit (WSK) - is an opinionated boilerplate for web development. Tools
 4. [Templating](#templating)
 5. [Styles](#styles)
 6. [JavaScript](#javascript)
-7. [Tasks](#tasks)
-8. [Troubleshooting](#troubleshooting)
-9. [Contributing](#contributing)
-10. [License](#license)
+7. [Watching](#watching)
+8. [Tasks](#tasks)
+9. [Troubleshooting](#troubleshooting)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 
 ## Install
@@ -32,7 +33,9 @@ Instruction for installation WSK please read in `master` branch [README.md](http
 There are few commands available to help you build and test sites:
 
 
-### Watch For Changes & Automatically Refresh Across Devices
+### Development mode
+
+Watch For Changes & Automatically Refresh Across Devices
 
 ```sh
 $ gulp
@@ -42,14 +45,16 @@ This includes linting as well as script, stylesheet and HTML compiling.
 Also, a [browsersync](https://browsersync.io/) script will be automatically generated, which will take care of precaching your sites resources.
 
 
-### Serve the Fully Built & Optimized Site
+### Production mode
+
+Serve the Fully Built & Optimized Site
 
 ```sh
 $ gulp build
 ```
 
 Command for building current project, ready for WordPress.
-This includes linting as well as script, stylesheet and HTML compiling.
+This includes linting as well as script, stylesheet (group & sort CSS media queries) and HTML compiling.
 
 ### Linter - only for JS
 
@@ -116,7 +121,7 @@ If you want to use our WSK, you need to know something about the structure.
   ├── css                         #Folder with compiled styles
   ├── js                          #Folder with compiled js
   ├── custom-folder               #Folder with your sources, witch are not compiling (like - images, fonts, videos, audios)
-  └──  index.html                 #Compiled html file
+  └── index.html                  #Compiled html file
 
 ```
 
@@ -148,7 +153,7 @@ So while normal CSS doesn’t yet allow things like variables, mixins (reusable 
 * After installing the extension you must **include** its **css** or **sass** files in `assets/vendor_entries/vendor.scss` using `@import`.
 
 You are able to add your own **custom sass files** and optionally **disable/enable** [postcss-sort-css-media-queries](https://github.com/solversgroup/postcss-sort-media-queries).
-You can see this property `getPathesForStylesCustom` in the `gulp-config.js` file:
+You can see this property `getFilesForStylesCustom` in the `gulp-config.js` file:
 
 ![image](https://user-images.githubusercontent.com/38295556/72220657-88b3c400-355b-11ea-90d7-4cbb5edb0f43.png)
 
@@ -183,6 +188,11 @@ In our WSK we use **CSS3 custom properties** and **relative units** `rem`. By de
 * After installing the extension you must **include** its **javascript** files in `assets/vendor_entries/vendor.js` by adding new elements to the **array**.
 
 For linting javascript files in WSK used [esLint](https://eslint.org/). esLint a linter tool for identifying and reporting on patterns in JavaScript (used [airbnb-base rules](https://www.npmjs.com/package/eslint-config-airbnb-base)) and some custom rules in file configuration `.eslintrc`.
+
+## Watching
+
+After run `gulp` by default gulp watching for your files in `src` and `assets` folders.
+For `js`, `scss`, `html` and `vendors_entries` folders after change in included files, watcher run they tasks for compiling. For `images` and other folders (and files in `src` root) watcher run tasks for copy files.
 
 ## Tasks
 

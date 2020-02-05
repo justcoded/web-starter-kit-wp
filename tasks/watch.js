@@ -14,6 +14,10 @@ module.exports = function (options) {
 
     gulp.watch(`html/**/*`, gulp.series(options.tasks.buildHtml, options.tasks.lintHtml));
 
+    gulp.watch(`vendor_entries/vendor.js`, gulp.series(options.tasks.buildJsVendors));
+
+    gulp.watch(`vendor_entries/vendor.scss`, gulp.series(options.tasks.buildStylesVendors));
+
     gulp.watch([`../${options.dir}/**/*`, `!../${options.dir}/css/*.map`])
       .on('change', options.browserSync.reload);
   };

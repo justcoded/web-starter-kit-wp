@@ -69,6 +69,12 @@
   requireTask(`${cfg.task.buildHtml}`, `./${cfg.folder.tasks}/`, {
     templates: cfg.buildHtml.templates,
     dest: cfg.buildHtml.dest,
+    mainJs: cfg.file.mainJs,
+    publicJs: cfg.file.publicJs,
+    vendorJs: cfg.file.vendorJs,
+    mainStyles: cfg.file.mainStyles,
+    vendorStyles: cfg.file.vendorStyles,
+    error: cfg.error,
   });
 
   /**
@@ -76,6 +82,7 @@
    */
   requireTask(`${cfg.task.lintHtml}`, `./${cfg.folder.tasks}/`, {
     dir: cfg.folder.build,
+    error: cfg.error,
   });
 
   /**
@@ -92,6 +99,7 @@
     dest: cfg.folder.build,
     mainJs: cfg.file.mainJs,
     publicJs: cfg.file.publicJs,
+    error: cfg.error,
   });
 
   /**
@@ -102,6 +110,7 @@
     temp: cfg.folder.temp,
     vendorJs: cfg.file.vendorJs,
     vendorJsTemp: cfg.file.vendorJsTemp,
+    error: cfg.error,
   });
 
   /**
@@ -109,7 +118,8 @@
    */
   requireTask(`${cfg.task.buildStyles}`, `./${cfg.folder.tasks}/`, {
     dest: cfg.folder.build,
-    mainScss: cfg.file.mainScss,
+    mainStyles: cfg.file.mainStyles,
+    error: cfg.error,
     checkProduction: true,
   });
 
@@ -117,9 +127,10 @@
     * Build styles custom files listed in the config
     */
   requireTask(`${cfg.task.buildStylesCustom}`, `./${cfg.folder.tasks}/`, {
-    stylesCustomInfo: cfg.getPathesForStylesCustom(),
+    stylesCustomInfo: cfg.getFilesForStylesCustom(),
     dest: cfg.folder.build,
     sortType: cfg.buildStyles.sortType,
+    error: cfg.error,
     checkProduction: true,
   });
 
@@ -128,7 +139,8 @@
    */
   requireTask(`${cfg.task.buildStylesVendors}`, `./${cfg.folder.tasks}/`, {
     dest: cfg.folder.build,
-    vendorScss: cfg.file.vendorScss,
+    vendorStyles: cfg.file.vendorStyles,
+    error: cfg.error,
   });
 
   /**
@@ -156,8 +168,10 @@
     tasks: {
       lintJs: cfg.task.lintJs,
       buildJs: cfg.task.buildJs,
+      buildJsVendors: cfg.task.buildJsVendors,
       buildStyles: cfg.task.buildStyles,
       buildStylesCustom: cfg.task.buildStylesCustom,
+      buildStylesVendors: cfg.task.buildStylesVendors,
       buildHtml: cfg.task.buildHtml,
       lintHtml: cfg.task.lintHtml,
     },

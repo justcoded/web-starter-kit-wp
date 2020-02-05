@@ -15,16 +15,13 @@ module.exports = function (options) {
   const plugins = [
     cssimport(),
   ];
-  const errorConfig = {
-    title: 'Sass compiling error',
-    icon: './sys_icon/error_icon.png',
-    wait: true,
-  };
+
+  options.error.title = 'Sass compiling error';
 
   return () => {
-    return gulp.src(`./vendor_entries/${options.vendorScss}`)
+    return gulp.src(`./vendor_entries/vendor.scss`)
       .pipe(sass.sync())
-      .on('error', notify.onError(errorConfig))
+      .on('error', notify.onError(options.error))
       .pipe(postcss(plugins))
       .pipe(gulp.dest(`../${options.dest}/css`));
   };

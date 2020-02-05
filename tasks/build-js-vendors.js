@@ -17,11 +17,8 @@ module.exports = function (options) {
   const babelConfig = {
     presets: ['@babel/preset-env'],
   };
-  const errorConfig = {
-    title: 'JS compiling error',
-    icon: './sys_icon/error_icon.png',
-    wait: true,
-  };
+  
+  options.error.title = 'JS compiling error';
 
   return (done) => {
     if (noneES5 && noneES6) {
@@ -33,13 +30,13 @@ module.exports = function (options) {
     } else if (noneES5) {
       return browserify({ entries: jsVendors.es6 })
         .transform('babelify', babelConfig)
-        .bundle().on('error', notify.onError(errorConfig))
+        .bundle().on('error', notify.onError(options.error))
         .pipe(source(options.vendorJs))
         .pipe(gulp.dest(`../${options.dest}/js`));
     } else {
       return browserify({ entries: jsVendors.es6 })
         .transform('babelify', babelConfig)
-        .bundle().on('error', notify.onError(errorConfig))
+        .bundle().on('error', notify.onError(options.error))
         .pipe(source(options.vendorJsTemp))
         .pipe(gulp.dest(`./${options.temp}/js`))
         .on('end', () => {

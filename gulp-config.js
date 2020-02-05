@@ -10,8 +10,8 @@ module.exports = {
     publicJs: 'jquery.main.js',
     vendorJs: 'vendor.js',
     vendorJsTemp: 'vendor.temp.js',
-    mainScss: 'styles.scss',
-    vendorScss: 'vendor.scss',
+    mainStyles: 'styles.css',
+    vendorStyles: 'vendor.css',
   },
   buildHtml: {
     templates: 'html/templates',
@@ -34,7 +34,11 @@ module.exports = {
     browserSync: 'browser-sync-server',
     watch: 'watch',
   },
-  getPathesForStylesCustom: function () {
+  error: {
+    icon: './sys_icon/error_icon.png',
+    wait: true,
+  },
+  getFilesForStylesCustom: function () {
     return {
       files: [],
       isGcmq: false,
