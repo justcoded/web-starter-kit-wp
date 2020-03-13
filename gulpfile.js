@@ -119,6 +119,7 @@
   requireTask(`${cfg.task.buildStyles}`, `./${cfg.folder.tasks}/`, {
     dest: cfg.folder.build,
     mainStyles: cfg.file.mainStyles,
+    sortType: cfg.buildStyles.sortType,
     error: cfg.error,
     checkProduction: true,
   });
