@@ -5,9 +5,12 @@
 
 const CLIEngine = require('eslint').CLIEngine;
 
+const global = require('../gulp-config.js');
+
 module.exports = function (options) {
+  const fixJs = global.isFixJs();
   const cli = new CLIEngine({
-    fix: options.isFix,
+    fix: fixJs,
     useEslintrc: true,
   });
 

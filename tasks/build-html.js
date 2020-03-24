@@ -5,28 +5,27 @@
 
 const gulp = require('gulp');
 const fileInclude = require('gulp-file-include');
-const notify = require('gulp-notify');
 
-module.exports = function (options) {
+const notifier = require('../helpers/notifier');
+const global = require('../gulp-config.js');
+
+module.exports = function () {
   const config = {
     prefix: '@@',
-    basepath: `./${options.templates}`,
+    basepath: `./${global.buildHtml.templates}`,
     indent: true,
     context: {
-      mainJs: options.mainJs,
-      publicJs: options.publicJs,
-      vendorJs: options.vendorJs,
-      mainStyles: options.mainStyles,
-      vendorStyles: options.vendorStyles,
+      publicJs: global.file.publicJs,
+      vendorJs: global.file.vendorJs,
+      mainStyles: global.file.mainStyles,
+      vendorStyles: global.file.vendorStyles,
     },
   };
 
-  options.error.title = 'HTML compiling error';
-
-  return () => {
-    return gulp.src(`./${options.templates}/**/*.html`)
+  return (done) => {
+    return gulp.src(`./${global.buildHtml.templates}/**/*.html`)
       .pipe(fileInclude(config))
-      .on('error', notify.onError(options.error))
-      .pipe(gulp.dest(`../${options.dest}`));
+      .on('error', (error) => notifier.error(error.message, 'HTML compiling error', done))
+      .pipe(gulp.dest(`../${global.folder.build}`));
   };
 };
