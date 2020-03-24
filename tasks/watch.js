@@ -17,7 +17,7 @@ module.exports = function (options) {
       force: true,
     };
 
-    const filePathSrc = path.relative(path.resolve(global.folder.prod), file);
+    const filePathSrc = path.relative(path.resolve(global.folder.prod), file).split(`${global.folder.prod}/`)[1];
     const filePathBuild = `../${global.folder.build}/${filePathSrc}`;
 
     await del(filePathBuild, config);
@@ -38,7 +38,7 @@ module.exports = function (options) {
       .on('unlink', (file) => cleaning(file))
       .on('add', gulp.series(global.task.copyFiles));
 
-    gulp.watch([`../${global.folder.prod}/**/*`, `!./${global.folder.build}/**/*.map`])
+    gulp.watch([`../${global.folder.build}/**/*`, `!./${global.folder.build}/**/*.map`])
       .on('change', options.browserSyncInstance.reload)
       .on('unlink', options.browserSyncInstance.reload)
       .on('add', options.browserSyncInstance.reload);

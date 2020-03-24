@@ -65,7 +65,7 @@ module.exports = {
   getFilesToCopyProd() {
     return [
       `../${this.folder.build}/**`,
-      `{../${this.folder.build}/js,../${this.folder.build}/css}`,
+      `!../${this.folder.build}/*.html`,
     ];
   },
   isProduction() {
