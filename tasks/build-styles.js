@@ -24,7 +24,7 @@ module.exports = function () {
 
   production ? plugins.push(gcmq({ sort: global.buildStyles.sortType, })) : null;
 
-  return () => {
+  return (done) => {
     return gulp.src(`./scss/${global.file.mainStylesSrc}`)
       .pipe(gulpif(!production, sourcemaps.init({ loadMaps: true, })))
       .pipe(sass.sync({ sourceMap: !production, }))

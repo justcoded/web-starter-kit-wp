@@ -14,7 +14,7 @@ module.exports = function (options) {
     useEslintrc: true,
   });
 
-  return done => {
+  return (done) => {
     const report = cli.executeOnFiles(['./js/**/*.js']);
     const formatter = cli.getFormatter();
 
