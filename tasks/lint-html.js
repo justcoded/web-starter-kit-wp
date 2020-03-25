@@ -12,7 +12,7 @@ const global = require('../gulp-config.js');
 module.exports = function (options) {
 
   return (done) => {
-    gulp.src(`../${global.folder.build}/*.html`)
+    gulp.src(`../${global.folder.build}/**/*.html`)
       .pipe(htmlhint({
         'attr-lowercase': false,
       }))
