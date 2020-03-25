@@ -188,7 +188,7 @@ In our WSK we use **CSS3 custom properties** and **relative units** `rem`. By de
 * All **javascript** is **babelified** so yes! You can use all kind of [ES6 features](https://babeljs.io/docs/learn-es2015/) here.
 * All **extensions** must be installed by the [npm](https://docs.npmjs.com/cli/install);
 * After installing the extension you must **include** its **javascript** files in `assets/vendor_entries/vendor.js` by adding new elements to the **array**.
-* If you using ES modules or any types of modules, please import your modules in `vendor-compile.js`.
+* If you using ES modules or any types of modules, please import your modules in `assets/vendor_entries/vendor-compile.js`.
 
 For linting javascript files in WSK used [esLint](https://eslint.org/). esLint a linter tool for identifying and reporting on patterns in JavaScript (used [airbnb-base rules](https://www.npmjs.com/package/eslint-config-airbnb-base)) and some custom rules in file configuration `.eslintrc`.
 
