@@ -18,6 +18,7 @@ module.exports = function () {
 
     gulp.src(`../${global.folder.build}/**/*.html`, { buffer: false, })
       .pipe(gulp.dest(`./html_compiled`));
+
     done();
   };
 };
