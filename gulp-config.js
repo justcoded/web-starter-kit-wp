@@ -62,12 +62,6 @@ module.exports = {
       `!{../${this.folder.prod}/js,../${this.folder.prod}/js/**}`,
     ];
   },
-  getFilesToCopyProd() {
-    return [
-      `../${this.folder.build}/**`,
-      `!../${this.folder.build}/*.html`,
-    ];
-  },
   isProduction() {
     return process.argv[process.argv.length - 1] === this.task.prod;
   },

@@ -14,12 +14,13 @@ module.exports = function () {
 
   const production = global.isProduction();
   const devFolders = [
-    `../${global.folder.build}`,
-    `./${global.folder.temp}`,
+    `../${global.folder.build}/**`,
+    `./${global.folder.temp}/**`,
   ];
   const prodFolders = production ? [
-    `../${global.folder.prod}/css`,
-    `../${global.folder.prod}/js`,
+    `../${global.folder.prod}/css/**`,
+    `../${global.folder.prod}/js/**`,
+    `./html_compiled/**/*.html`,
   ] : [];
   const delFolders = [
     ...devFolders,
