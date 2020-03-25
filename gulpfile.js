@@ -51,7 +51,7 @@ gulp.task(global.task.buildHtml, require('./tasks/build-html')());
 gulp.task(global.task.buildStyles, require('./tasks/build-styles')());
 
 /**
- * Build styles custom files listed in the config
+ * Build custom styles files listed in the config, without sourcemaps & Gcmq
  */
 gulp.task(global.task.buildStylesCustom, require('./tasks/build-styles-custom')());
 
@@ -79,16 +79,6 @@ gulp.task(global.task.buildJs, require('./tasks/build-js')());
  * Build JS vendor (concatenate vendors array)
  */
 gulp.task(global.task.buildJsVendors, require('./tasks/build-js-vendors')());
-
-/**
- * Copy folders to the build folder
- */
-gulp.task(global.task.copyFiles, require('./tasks/copy-files')());
-
-/**
- * Copy folders to the production folder
- */
-gulp.task(global.task.copyFilesProd, require('./tasks/copy-files-production')());
 
 /**
  * Start browserSync server
@@ -121,7 +111,6 @@ gulp.task('default', gulp.series(
       global.task.buildJsVendors,
     ),
   ),
-  global.task.copyFiles,
   gulp.parallel(
     global.task.browserSync,
     global.task.watch,
@@ -149,6 +138,4 @@ gulp.task('build', gulp.series(
       global.task.buildJsVendors,
     ),
   ),
-  global.task.copyFiles,
-  global.task.copyFilesProd,
 ));

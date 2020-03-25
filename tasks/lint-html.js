@@ -9,7 +9,7 @@ const htmlhint = require('gulp-htmlhint');
 const notifier = require('../helpers/notifier');
 const global = require('../gulp-config.js');
 
-module.exports = function (options) {
+module.exports = function () {
 
   return (done) => {
     gulp.src(`../${global.folder.build}/**/*.html`)
@@ -20,7 +20,7 @@ module.exports = function (options) {
       .pipe(htmlhint.failOnError({
         suppress: true,
       }))
-      .on('error', (error) => notifier.error(error.message, 'HTML linting error'));
+      .on('error', (error) => notifier.error(error.message, 'HTML linting error', done));
 
     return done();
   };

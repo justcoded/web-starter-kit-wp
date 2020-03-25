@@ -20,14 +20,14 @@ module.exports = {
   folder: {
     tasks: 'tasks',
     src: 'src',
-    build: 'develop',
-    prod: 'public',
+    dev: 'develop',
+    build: 'public',
     temp: '.temp',
   },
   file: {
     mainHtml: 'index.html',
     mainJs: 'app.js',
-    publicJs: 'jquery.main.js',
+    buildJs: 'jquery.main.js',
     vendorJs: 'vendor.js',
     vendorJsComp: 'vendor-compile.js',
     vendorJsTemp: 'vendor.temp.js',
@@ -54,13 +54,6 @@ module.exports = {
       files: [],
       isGcmq: false,
     };
-  },
-  getFilesToCopy() {
-    return [
-      `../${this.folder.prod}/**`,
-      `!{../${this.folder.prod}/css,../${this.folder.prod}/css/**}`,
-      `!{../${this.folder.prod}/js,../${this.folder.prod}/js/**}`,
-    ];
   },
   isProduction() {
     return process.argv[process.argv.length - 1] === this.task.prod;

@@ -26,7 +26,7 @@ module.exports = function () {
       });
 
       await bundle.write({
-        file: `../${global.folder.build}/js/${global.file.publicJs}`,
+        file: `../${global.folder.build}/js/${global.file.buildJs}`,
         format: 'iife',
         name: 'main',
         sourcemap: false,
