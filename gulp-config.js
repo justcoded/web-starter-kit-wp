@@ -53,7 +53,7 @@ module.exports = {
     };
   },
   isProduction() {
-    return process.argv[process.argv.length - 1] === this.task.prod;
+    return process.argv[process.argv.length - 1] === this.task.build;
   },
   isFixJs() {
     return process.argv[process.argv.length - 1] === this.task.fixJs;
