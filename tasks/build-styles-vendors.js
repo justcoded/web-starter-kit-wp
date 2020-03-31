@@ -7,22 +7,22 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const cssimport = require('postcss-import');
-const notify = require('gulp-notify');
+
+const notifier = require('../helpers/notifier');
+const global = require('../gulp-config.js');
 
 sass.compiler = require('sass');
 
-module.exports = function (options) {
+module.exports = function () {
   const plugins = [
     cssimport(),
   ];
 
-  options.error.title = 'Sass compiling error';
-
-  return () => {
-    return gulp.src(`./vendor_entries/vendor.scss`)
+  return (done) => {
+    return gulp.src(`./vendor_entries/${global.file.vendorStylesSrc}`)
       .pipe(sass.sync())
-      .on('error', notify.onError(options.error))
+      .on('error', (error) => notifier.error(error.message, 'Vendor Sass compiling error', done))
       .pipe(postcss(plugins))
-      .pipe(gulp.dest(`../${options.dest}/css`));
+      .pipe(gulp.dest(`../${global.folder.build}/css`));
   };
 };

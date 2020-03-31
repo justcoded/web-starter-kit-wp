@@ -23,213 +23,119 @@
  *
  */
 
-(() => {
-  'use strict';
+'use strict';
 
-  const cfg = require('./gulp-config.js');
-  const gulp = require('gulp');
-  const browserSync = require('browser-sync').create();
+const gulp = require('gulp');
+const browserSyncInstance = require('browser-sync').create();
 
-  /**
-   * Require gulp task from file
-   * @param  {string} taskName     Task name
-   * @param  {String} path         Path to task file
-   * @param  {Object} options      Options for task
-   * @param  {Array}  dependencies Task dependencies
-   */
-  function requireTask(taskName, path, options, dependencies) {
-    let settings = options || {};
-    const taskFunction = function (callback) {
-      if (settings.checkProduction) {
-        settings.isProduction = process.argv[process.argv.length - 1] === 'build';
-      }
-      if (settings.checkFix) {
-        settings.isFix = process.argv[process.argv.length - 1] === 'fix-js';
-      }
+const global = require('./gulp-config.js');
 
-      let task = require(path + taskName + '.js').call(this, settings);
+/**
+ * Clean build folders
+ */
+gulp.task(global.task.cleanBuild, require('./tasks/clean-build')());
 
-      return task(callback);
-    };
+/**
+ * Lint HTML
+ */
+gulp.task(global.task.lintHtml, require('./tasks/lint-html')());
 
-    settings.taskName = taskName;
+/**
+ * Template HTML
+ */
+gulp.task(global.task.buildHtml, require('./tasks/build-html')());
 
-    if (!Array.isArray(dependencies)) {
-      gulp.task(taskName, taskFunction);
-    } else if (dependencies.length === 1) {
-      gulp.task(taskName, gulp.series(dependencies[0], taskFunction));
-    } else {
-      gulp.task(taskName, gulp.series(dependencies, taskFunction));
-    }
-  }
+/**
+ * Build styles for application
+ */
+gulp.task(global.task.buildStyles, require('./tasks/build-styles')());
 
-  /**
-   * Template HTML
-   */
-  requireTask(`${cfg.task.buildHtml}`, `./${cfg.folder.tasks}/`, {
-    templates: cfg.buildHtml.templates,
-    dest: cfg.buildHtml.dest,
-    mainJs: cfg.file.mainJs,
-    publicJs: cfg.file.publicJs,
-    vendorJs: cfg.file.vendorJs,
-    mainStyles: cfg.file.mainStyles,
-    vendorStyles: cfg.file.vendorStyles,
-    error: cfg.error,
-  });
+/**
+ * Build custom styles files listed in the config, without sourcemaps & Gcmq
+ */
+gulp.task(global.task.buildStylesCustom, require('./tasks/build-styles-custom')());
 
-  /**
-   * Lint HTML
-   */
-  requireTask(`${cfg.task.lintHtml}`, `./${cfg.folder.tasks}/`, {
-    dir: cfg.folder.build,
-    error: cfg.error,
-  });
+/**
+ * Build styles for vendor
+ */
+gulp.task(global.task.buildStylesVendors, require('./tasks/build-styles-vendors')());
 
-  /**
-   * Lint JS
-   */
-  requireTask(`${cfg.task.lintJs}`, `./${cfg.folder.tasks}/`, {
-    checkFix: true,
-  });
+/**
+ * Lint JS
+ */
+gulp.task(global.task.lintJs, require('./tasks/lint-js')());
 
-  /**
-   * Build JS
-   */
-  requireTask(`${cfg.task.buildJs}`, `./${cfg.folder.tasks}/`, {
-    dest: cfg.folder.build,
-    mainJs: cfg.file.mainJs,
-    publicJs: cfg.file.publicJs,
-    error: cfg.error,
-  });
+/**
+ * Fix JS files
+ */
+gulp.task(global.task.fixJs, require('./tasks/lint-js')());
 
-  /**
-   * Build JS vendor (concatenate vendors array)
-   */
-  requireTask(`${cfg.task.buildJsVendors}`, `./${cfg.folder.tasks}/`, {
-    dest: cfg.folder.build,
-    temp: cfg.folder.temp,
-    vendorJs: cfg.file.vendorJs,
-    vendorJsTemp: cfg.file.vendorJsTemp,
-    error: cfg.error,
-  });
+/**
+ * Build JS
+ */
+gulp.task(global.task.buildJs, require('./tasks/build-js')());
 
-  /**
-   * Build styles for application
-   */
-  requireTask(`${cfg.task.buildStyles}`, `./${cfg.folder.tasks}/`, {
-    dest: cfg.folder.build,
-    mainStyles: cfg.file.mainStyles,
-    sortType: cfg.buildStyles.sortType,
-    error: cfg.error,
-    checkProduction: true,
-  });
+/**
+ * Build JS vendor (concatenate vendors array)
+ */
+gulp.task(global.task.buildJsVendors, require('./tasks/build-js-vendors')());
 
-  /**
-    * Build styles custom files listed in the config
-    */
-  requireTask(`${cfg.task.buildStylesCustom}`, `./${cfg.folder.tasks}/`, {
-    stylesCustomInfo: cfg.getFilesForStylesCustom(),
-    dest: cfg.folder.build,
-    sortType: cfg.buildStyles.sortType,
-    error: cfg.error,
-    checkProduction: true,
-  });
+/**
+ * Start browserSync server
+ */
+gulp.task(global.task.browserSync, require('./tasks/browser-sync-server')({ browserSyncInstance }));
 
-  /**
-   * Build styles for vendor from Sass
-   */
-  requireTask(`${cfg.task.buildStylesVendors}`, `./${cfg.folder.tasks}/`, {
-    dest: cfg.folder.build,
-    vendorStyles: cfg.file.vendorStyles,
-    error: cfg.error,
-  });
+/**
+ * Watch for file changes
+ */
+gulp.task(global.task.watch, require('./tasks/watch')({ browserSyncInstance }));
 
-  /**
-   * Clean build folder
-   */
-  requireTask(`${cfg.task.cleanBuild}`, `./${cfg.folder.tasks}/`, {
-    dir: cfg.folder.build,
-  });
-
-  /**
-   * Start browserSync server
-   */
-  requireTask(`${cfg.task.browserSync}`, `./${cfg.folder.tasks}/`, {
-    mainHtml: cfg.file.mainHtml,
-    dir: cfg.folder.build,
-    browserSync,
-  });
-
-  /**
-   * Watch for file changes
-   */
-  requireTask(`${cfg.task.watch}`, `./${cfg.folder.tasks}/`, {
-    dir: cfg.folder.build,
-    browserSync,
-    tasks: {
-      lintJs: cfg.task.lintJs,
-      buildJs: cfg.task.buildJs,
-      buildJsVendors: cfg.task.buildJsVendors,
-      buildStyles: cfg.task.buildStyles,
-      buildStylesCustom: cfg.task.buildStylesCustom,
-      buildStylesVendors: cfg.task.buildStylesVendors,
-      buildHtml: cfg.task.buildHtml,
-      lintHtml: cfg.task.lintHtml,
-    },
-  }, false);
-
-  /**
-   * Default Gulp task
-   */
-  gulp.task('default', gulp.series(
-    cfg.task.cleanBuild,
-    cfg.task.lintJs,
-    gulp.parallel(
-      gulp.series(
-        cfg.task.buildHtml,
-        cfg.task.lintHtml,
-      ),
-      gulp.series(
-        cfg.task.buildStyles,
-        cfg.task.buildStylesCustom,
-        cfg.task.buildStylesVendors,
-      ),
-      gulp.series(
-        cfg.task.buildJs,
-        cfg.task.buildJsVendors,
-      ),
+/**
+ * Develop mode - with browser sync, file watch & live reload
+ */
+gulp.task('default', gulp.series(
+  global.task.cleanBuild,
+  global.task.lintJs,
+  gulp.parallel(
+    gulp.series(
+      global.task.buildHtml,
+      global.task.lintHtml,
     ),
-    gulp.parallel(
-      cfg.task.browserSync,
-      cfg.task.watch
-    )
-  ));
+    gulp.series(
+      global.task.buildStyles,
+      global.task.buildStylesCustom,
+      global.task.buildStylesVendors,
+    ),
+    gulp.series(
+      global.task.buildJs,
+      global.task.buildJsVendors,
+    ),
+  ),
+  gulp.parallel(
+    global.task.browserSync,
+    global.task.watch,
+  ),
+));
 
-  /**
-  * Production Gulp task
-  */
-  gulp.task('build', gulp.series(
-    cfg.task.cleanBuild,
-    cfg.task.lintJs,
-    gulp.parallel(
-      gulp.series(
-        cfg.task.buildHtml,
-        cfg.task.lintHtml,
-      ),
-      gulp.series(
-        cfg.task.buildStyles,
-        cfg.task.buildStylesCustom,
-        cfg.task.buildStylesVendors,
-      ),
-      gulp.series(
-        cfg.task.buildJs,
-        cfg.task.buildJsVendors,
-      ),
-    )
-  ));
-
-  /**
-  * Fix JS files
-  */
- gulp.task('fix-js', gulp.series(cfg.task.lintJs));
-})();
+/**
+ * Production mode - creating production folder without unnecessary files
+ */
+gulp.task(global.task.build, gulp.series(
+  global.task.cleanBuild,
+  global.task.lintJs,
+  gulp.parallel(
+    gulp.series(
+      global.task.buildHtml,
+      global.task.lintHtml,
+    ),
+    gulp.series(
+      global.task.buildStyles,
+      global.task.buildStylesCustom,
+      global.task.buildStylesVendors,
+    ),
+    gulp.series(
+      global.task.buildJs,
+      global.task.buildJsVendors,
+    ),
+  ),
+));

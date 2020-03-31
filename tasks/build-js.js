@@ -1,27 +1,38 @@
 /**
- * Build custom js
+ * Build js
  */
 'use strict';
 
-const gulp = require('gulp');
-const browserify = require('browserify');
-const source = require('vinyl-source-stream');
-const notify = require('gulp-notify');
+const { rollup } = require('rollup');
+const resolve = require('@rollup/plugin-node-resolve');
+const babel = require('rollup-plugin-babel');
 
-module.exports = function (options) {
-  const babelConfig = {
-    presets: ['@babel/preset-env'],
-  };
+const notifier = require('../helpers/notifier');
+const global = require('../gulp-config.js');
 
-  options.error.title = 'JS compiling error';
+module.exports = function () {
 
-  return () => {
-    return browserify({
-      entries: `./js/${options.mainJs}`,
-    })
-      .transform('babelify', babelConfig)
-      .bundle().on('error', notify.onError(options.error))
-      .pipe(source(options.publicJs))
-      .pipe(gulp.dest(`../${options.dest}/js`));
+  return async (done) => {
+    try {
+      const bundle = await rollup({
+        input: `./js/${global.file.mainJs}`,
+        plugins: [
+          resolve(),
+          babel(),
+        ],
+        onwarn(warning, warn) {
+          throw new Error(warning.message);
+        },
+      });
+
+      await bundle.write({
+        file: `../${global.folder.build}/js/${global.file.buildJs}`,
+        format: 'iife',
+        name: 'main',
+        sourcemap: false,
+      });
+    } catch (error) {
+      notifier.error(error, 'Main JS compiling error', done);
+    }
   };
 };

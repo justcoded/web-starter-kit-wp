@@ -21,7 +21,6 @@ composer.lock
 # Ignore Mac DS_Store files
 .DS_Store
 ._*
-node_modules/
 .com.apple.timemachine.supported
 
 # linux backup files
@@ -29,7 +28,6 @@ node_modules/
 
 # markup
 .sass-cache
-node_modules
 /.temp/
 *.map
 *.tmp
@@ -43,4 +41,5 @@ tmp
 *.rar
 
 #npm dependencies
+/node_modules/
 package-lock.json
