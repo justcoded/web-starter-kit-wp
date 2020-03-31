@@ -20,7 +20,7 @@ module.exports = function (options) {
 
     gulp.watch(`./vendor_entries/**/*.scss`, gulp.series(global.task.buildStylesVendors));
 
-    gulp.watch([`../${global.folder.build}/**`, `!./${global.folder.build}/**/*.map`])
+    gulp.watch([`../${global.folder.build}/**`, `!../${global.folder.build}/**/*.map`])
       .on('change', options.browserSyncInstance.reload)
       .on('unlink', options.browserSyncInstance.reload)
       .on('add', options.browserSyncInstance.reload);
