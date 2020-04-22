@@ -10,6 +10,6 @@ jQuery.noConflict();
 (($) => {
   // When DOM is ready
   $(() => {
-    dotsEffect.init();
+    dotsEffect($);
   });
 })(jQuery);
