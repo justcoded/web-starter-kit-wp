@@ -46,7 +46,7 @@ module.exports = function () {
       });
       const tempJsFileName = tempJs.output[0].fileName;
 
-      gulp.src(
+      await gulp.src(
         filesExist([
           ...vendorFiles,
           `./${global.folder.temp}/js/${tempJsFileName}`,
