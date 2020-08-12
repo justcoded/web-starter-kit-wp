@@ -5,7 +5,6 @@ module.exports = {
     fixJs: 'fix-js',
     buildHtml: 'build-html',
     buildJs: 'build-js',
-    buildJsVendors: 'build-js-vendors',
     buildStyles: 'build-styles',
     buildStylesCustom: 'build-styles-custom',
     buildStylesVendors: 'build-styles-vendors',
@@ -26,8 +25,6 @@ module.exports = {
     mainJs: 'app.js',
     buildJs: 'jquery.main.js',
     vendorJs: 'vendor.js',
-    vendorJsComp: 'vendor-compile.js',
-    vendorJsTemp: 'vendor.temp.js',
     mainStylesSrc: 'styles.scss',
     mainStyles: 'styles.css',
     vendorStylesSrc: 'vendor.scss',
@@ -39,6 +36,11 @@ module.exports = {
   buildStyles: {
     // Sorting type css media queries: 'desktop-first' || 'mobile-first'
     sortType: 'desktop-first',
+  },
+  buildJs: {
+    externalLibs: {
+      jquery: 'jQuery',
+    },
   },
   error: {
     sound: true,

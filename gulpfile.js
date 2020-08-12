@@ -76,11 +76,6 @@ gulp.task(global.task.fixJs, require('./tasks/lint-js')());
 gulp.task(global.task.buildJs, require('./tasks/build-js')());
 
 /**
- * Build JS vendor (concatenate vendors array)
- */
-gulp.task(global.task.buildJsVendors, require('./tasks/build-js-vendors')());
-
-/**
  * Start browserSync server
  */
 gulp.task(global.task.browserSync, require('./tasks/browser-sync-server')({ browserSyncInstance }));
@@ -108,7 +103,6 @@ gulp.task('default', gulp.series(
     ),
     gulp.series(
       global.task.buildJs,
-      global.task.buildJsVendors,
     ),
   ),
   gulp.parallel(
@@ -135,7 +129,6 @@ gulp.task(global.task.build, gulp.series(
     ),
     gulp.series(
       global.task.buildJs,
-      global.task.buildJsVendors,
     ),
   ),
 ));
