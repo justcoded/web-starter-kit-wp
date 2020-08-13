@@ -37,7 +37,6 @@ const buildStyles = require('./tasks/build-styles');
 const buildStylesCustom = require('./tasks/build-styles-custom');
 const buildStylesVendors = require('./tasks/build-styles-vendors');
 const lintJs = require('./tasks/lint-js');
-const fixJs = require('./tasks/lint-js');
 const buildJs = require('./tasks/build-js');
 const browserSync = require('./tasks/browser-sync-server');
 const watch = require('./tasks/watch');
@@ -79,7 +78,7 @@ gulp.task(global.task.lintJs, lintJs());
 /**
  * Fix JS files
  */
-gulp.task(global.task.fixJs, fixJs());
+gulp.task(global.task.fixJs, lintJs());
 
 /**
  * Build JS
