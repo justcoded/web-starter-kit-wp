@@ -18,7 +18,6 @@ module.exports = {
     tasks: 'tasks',
     // dev: 'develop',
     build: 'public',
-    temp: '.temp',
   },
   file: {
     mainHtml: 'index.html',
