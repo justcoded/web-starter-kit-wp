@@ -10,6 +10,8 @@ const notifier = require('../helpers/notifier');
 const global = require('../gulp-config.js');
 
 module.exports = function () {
+  const production = global.isProduction();
+
   return (done) => {
     try {
       const config = {
@@ -48,22 +50,22 @@ module.exports = function () {
       };
 
       webpack(config, (error, stats) => {
-        if (stats) {
-          return done();
-        }
-
         if (error) {
           throw new Error(error);
         }
+        
+        if (production) {
+          console.log(
+            stats.toString({
+              version: false,
+              hash: false,
+              chunks: false,
+              colors: true,
+            })
+          );
+        }
 
-        console.log(
-          stats.toString({
-            version: false,
-            hash: false,
-            chunks: false,
-            colors: true,
-          })
-        );
+        return done();
       });
     } catch (error) {
       notifier.error(error, 'JS compiling error', done);
