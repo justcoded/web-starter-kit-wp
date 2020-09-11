@@ -16,7 +16,7 @@ module.exports = function (options) {
 
     gulp.watch(`./js/**/*.js`, gulp.series(global.task.lintJs, global.task.buildJs));
 
-    gulp.watch(`./vendor_entries/**/*.js`, gulp.series(global.task.buildJsVendors));
+    gulp.watch(`./vendor_entries/**/*.js`, gulp.series(global.task.buildJs));
 
     gulp.watch(`./vendor_entries/**/*.scss`, gulp.series(global.task.buildStylesVendors));
 
