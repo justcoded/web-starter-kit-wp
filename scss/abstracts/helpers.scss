@@ -10,7 +10,7 @@
 
 // clearfix
 %clearfix {
- &:after {
+  &:after {
     content: '';
     display: block;
     clear: both;
@@ -31,7 +31,7 @@
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
@@ -57,8 +57,5 @@
 /// * 2. Add ellipsis at the end of the line.
 
 .ellipsis {
-  white-space: nowrap; // 1
-  text-overflow: ellipsis; // 2 
-  overflow: hidden;
+  @include ellipsis;
 }
-

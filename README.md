@@ -103,8 +103,6 @@ If you want to use our WSK, you need to know something about the structure.
   ├── system_files                #Folder with system files
   ├── tasks                       #Folder with tasks for gulpfile
   ├── vendor_entries              #Folder for vendor entries (plugins)
-    ├── vendor.js                 #File for plugins js
-    ├── vendor-compile.js         #File for compiling (bunling) plugins js
     ├── vendor.scss               #File for plugins styles
   ├── .babelrc                    #Config for Babel
   ├── .browserslistrc             #Config for autoprefixer
@@ -181,14 +179,13 @@ In our WSK we use **CSS3 custom properties** and **relative units** `rem`. By de
 
  It is not an alternative syntax or language like CoffeeScript or TypeScript. It's good ol' fashioned JavaScript. The reason so many people are excited is that this version introduces a lot of much-needed improvements to the language.
 
- For bundling and transpiling `.js` files in our WSK we used [Rollup](https://rollupjs.org/) and [Babel](https://babeljs.io/).
+ For bundling and transpiling `.js` files in our WSK we used [Webpack](https://webpack.js.org/) and [Babel](https://babeljs.io/).
 
 * All custom **javascript** files are located in `js` folder;
 * Entry point for javascript is `assets/js/app.js` you can **import** all your **javascript** files from here using [ES6 import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) feature;
 * All **javascript** is **babelified** so yes! You can use all kind of [ES6 features](https://babeljs.io/docs/learn-es2015/) here.
 * All **extensions** must be installed by the [npm](https://docs.npmjs.com/cli/install);
-* After installing the extension you must **include** its **javascript** files in `assets/vendor_entries/vendor.js` by adding new elements to the **array**.
-* If you using ES modules or any types of modules, please import your modules in `assets/vendor_entries/vendor-compile.js`.
+* All third party libraries from `node_modules` and `src/vendor_entries`, are automatically separate in `vendor.js`.
 
 For linting javascript files in WSK used [esLint](https://eslint.org/). esLint a linter tool for identifying and reporting on patterns in JavaScript (used [airbnb-base rules](https://www.npmjs.com/package/eslint-config-airbnb-base)) and some custom rules in file configuration `.eslintrc`.
 
@@ -203,8 +200,7 @@ For `js`, `scss`, `html` and `vendors_entries` folders after change in included 
 | --- | --- |
 | browser-sync-server | Browsersync can watch your files as you work. Changes you make will either be injected into the page (CSS & images) or will cause all browsers to do a full-page refresh.|
 | build-html | Compiles all html templates into html files. |
-| build-js | Compiles all custom js from `assets/js` to `public/js` folder. |
-| build-js-vendors | Compiles all vendor js from `assets/vendor_entries` to `public/js` folder. |
+| build-js | Compiles all custom js from `assets/js` to `public/js` folder. Automatically separate your code and vendors. |
 | build-styles | Compiles all scss from `assets/scss` to `public/css` folder. |
 | build-styles-custom | Compiles all custom scss from `assets/scss` to `public/css` folder. |
 | build-styles-vendors | Compiles all vendor styles from `assets/vendor_entries` to `public/css` folder. |
