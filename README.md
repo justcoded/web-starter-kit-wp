@@ -33,15 +33,24 @@ Instruction for installation WSK please read in main repo [README.md](https://gi
 There are few commands available to help you build and test sites:
 
 
+### Test
+
+Test run with logs
+
+```sh
+$ npm run test
+```
+
 ### Development mode
 
 Watch For Changes & Automatically Refresh Across Devices
 
 ```sh
-$ gulp
+$ npm run dev
 ```
 
-This includes linting as well as script, stylesheet and HTML compiling.
+`dev` creates the `assets` folder in the root of the project.
+This includes linting as well as image, script, stylesheet and HTML optimization.
 Also, a [browsersync](https://browsersync.io/) script will be automatically generated, which will take care of precaching your sites resources.
 
 
@@ -50,27 +59,40 @@ Also, a [browsersync](https://browsersync.io/) script will be automatically gene
 Serve the Fully Built & Optimized Site
 
 ```sh
-$ gulp build
+$ npm run build
 ```
 
-Command for building current project, ready for WordPress.
-This includes linting as well as script, stylesheet (group & sort CSS media queries) and HTML compiling.
+`build` creates the `production` folder in the root of the project with **minifying** files from `assets`. It will help you to create clear instances of code for the **production** or **further implementation**.
 
-### Linter - only for JS
+
+### Lint for HTML
 
 ```sh
-$ gulp lint-js
+$ npm run lint-html
 ```
 
-`gulp lint-js` task run the separate lint for JS files.  
-Included in `gulp` and `gulp build` tasks.
+### Lint & fix for JS
 
 ```sh
-$ gulp fix-js
+$ npm run lint-js
 ```
 
-`gulp fix-js` task run lint and auto-fix (eslint method) for JS files.  
-**Not included in any tasks**.
+`lint-js` run the separate lint for JS files.  
+Included in `dev` and `build`.
+
+```sh
+$ npm run fix-js
+```
+
+`fix-js` run lint and auto-fix (eslint method) for JS files.  
+**Not included in any mode**.
+
+
+### Lint for HTML & JS
+
+```sh
+$ npm run lint
+```
 
 ## Structure
 
